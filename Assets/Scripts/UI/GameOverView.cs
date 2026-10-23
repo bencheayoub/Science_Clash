@@ -20,7 +20,7 @@ public class GameOverView : MonoBehaviour
 
     private void HandleGameOver(int winner)
     {
-        resultText.text = $"Player {winner + 1} wins!";
+        resultText.text = winner == 0 ? "You win!" : "Computer wins!";
         panel.SetActive(true);
     }
 

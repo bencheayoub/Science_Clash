@@ -8,6 +8,7 @@ public class TurnHUDView : MonoBehaviour
     [SerializeField] private TMP_Text turnText;
     [SerializeField] private TMP_Text energyText;
     [SerializeField] private Button endTurnButton;
+    [SerializeField] private int humanPlayerIndex = 0;
 
     private void Awake() => endTurnButton.onClick.AddListener(GameEvents.RaiseEndTurnClicked);
 
@@ -33,19 +34,11 @@ public class TurnHUDView : MonoBehaviour
 
     private void Refresh()
     {
-        if (game == null || !game.IsStarted) return;
+        bool humanTurn = game.CurrentPlayerIndex == humanPlayerIndex;
+    PlayerState current = game.GetPlayer(game.CurrentPlayerIndex);
 
-        if (game.IsGameOver)
-        {
-            turnText.text = "Game Over";
-            energyText.text = "";
-            endTurnButton.interactable = false;
-            return;
+    turnText.text = humanTurn ? "Your turn" : "Computer's turn";
+    energyText.text = $"Energy {current.Energy} / {current.MaxEnergy}";
+    endTurnButton.interactable = humanTurn;
         }
-
-        PlayerState current = game.GetPlayer(game.CurrentPlayerIndex);
-        turnText.text = $"Player {game.CurrentPlayerIndex + 1}'s turn";
-        energyText.text = $"Energy {current.Energy} / {current.MaxEnergy}";
-        endTurnButton.interactable = true;
-    }
 }

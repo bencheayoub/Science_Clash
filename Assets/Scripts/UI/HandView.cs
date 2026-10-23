@@ -5,6 +5,7 @@ public class HandView : MonoBehaviour
     [SerializeField] private GameManager game;
     [SerializeField] private CardView cardPrefab;
     [SerializeField] private Transform container;
+    [SerializeField] private int viewedPlayer = 0;
 
     private void OnEnable()
     {
@@ -34,7 +35,7 @@ public class HandView : MonoBehaviour
         foreach (Transform child in container)
             Destroy(child.gameObject);
 
-        Hand hand = game.GetPlayer(game.CurrentPlayerIndex).Hand;
+        Hand hand = game.GetPlayer(viewedPlayer).Hand;
         foreach (CardData card in hand.Cards)
         {
             CardView view = Instantiate(cardPrefab, container);
