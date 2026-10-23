@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScientistData
   scientistName: Curie
   maxHealth: 30
-  portrait: {fileID: 0}
+  portrait: {fileID: 4944963861512524587, guid: 13ad8e2ddeef1a179bd8628f18564106, type: 3}

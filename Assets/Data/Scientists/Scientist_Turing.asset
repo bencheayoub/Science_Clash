@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScientistData
   scientistName: Turing
   maxHealth: 30
-  portrait: {fileID: 0}
+  portrait: {fileID: -1551622918192118558, guid: 8437d94f7e4dc5891a1eac14fb0064e8, type: 3}

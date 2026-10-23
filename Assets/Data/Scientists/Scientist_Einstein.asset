@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47a80e8aae47ca29d8b45f5a7758b5fb, type: 3}
+  m_Name: Scientist_Einstein
+  m_EditorClassIdentifier: Assembly-CSharp::ScientistData
+  scientistName: Einstein
+  maxHealth: 30
+  portrait: {fileID: 1157690336138879057, guid: 4ed00523ba7ac9f52b48733cc723055b, type: 3}

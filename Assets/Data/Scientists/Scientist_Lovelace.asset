@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScientistData
   scientistName: Lovelace
   maxHealth: 30
-  portrait: {fileID: 0}
+  portrait: {fileID: 5905664392754226892, guid: 0e209b4fc0cd19a82a5c0164c489be58, type: 3}

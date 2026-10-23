@@ -9,6 +9,7 @@ public class ScientistPanelView : MonoBehaviour
     [SerializeField] private TMP_Text nameText;
     [SerializeField] private TMP_Text healthText;
     [SerializeField] private Slider healthBar;
+    [SerializeField] private Image portraitImage;
 
     private void OnEnable()
     {
@@ -45,5 +46,8 @@ public class ScientistPanelView : MonoBehaviour
             ? $"{scientist.CurrentHealth} / {scientist.MaxHealth}"
             : "DEFEATED";
         healthBar.value = (float)scientist.CurrentHealth / scientist.MaxHealth;
+        portraitImage.sprite = scientist.Data.Portrait;
+        portraitImage.preserveAspect = true;
+        portraitImage.enabled = scientist.Data.Portrait != null;
     }
 }

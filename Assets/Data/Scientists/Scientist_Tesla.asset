@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScientistData
   scientistName: Tesla
   maxHealth: 30
-  portrait: {fileID: 0}
+  portrait: {fileID: -3609679208278219701, guid: fb82e24d8245c0e04a9420bcd02c3515, type: 3}
