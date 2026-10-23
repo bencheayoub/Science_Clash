@@ -1,6 +1,6 @@
 # Science Clash Card Game: Technical Report
 
-**Challenge #2 (Card Game)** · Author: Atom
+**Challenge #2 (Card Game)** · Author: b.atomic
 
 ---
 
