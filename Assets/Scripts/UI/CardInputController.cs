@@ -4,7 +4,8 @@ using UnityEngine;
 public class CardInputController : MonoBehaviour
 {
     [SerializeField] private GameManager game;
-
+    [SerializeField] private int humanPlayerIndex = 0; 
+    
     private void OnEnable()
     {
         GameEvents.OnCardClicked += HandleCardClicked;
@@ -17,6 +18,11 @@ public class CardInputController : MonoBehaviour
         GameEvents.OnEndTurnClicked -= HandleEndTurnClicked;
     }
 
-    private void HandleCardClicked(CardData card) => game.TryPlayCard(game.CurrentPlayerIndex, card);
-    private void HandleEndTurnClicked() => game.EndTurn();
+private void HandleCardClicked(CardData card) => game.TryPlayCard(humanPlayerIndex, card);
+
+private void HandleEndTurnClicked()
+{
+    if (game.CurrentPlayerIndex == humanPlayerIndex)
+        game.EndTurn();
+}
 }

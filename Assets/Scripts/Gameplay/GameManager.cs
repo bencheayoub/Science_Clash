@@ -3,9 +3,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("Teams")]
-    [SerializeField] private List<ScientistData> player0Team = new List<ScientistData>();
-    [SerializeField] private List<ScientistData> player1Team = new List<ScientistData>();
+    [Header("Roster")]
+    [SerializeField] private List<ScientistData> roster = new List<ScientistData>();
 
     [Header("Deck")]
     [SerializeField] private List<CardData> startingCards = new List<CardData>();
@@ -19,6 +18,7 @@ public class GameManager : MonoBehaviour
     private TurnManager turnManager;
     private CardPlayService cardPlayService;
 
+    public IReadOnlyList<ScientistData> Roster => roster;
     public bool IsStarted { get; private set; }
     public bool IsGameOver { get; private set; }
     public int WinnerIndex { get; private set; } = -1;
@@ -26,23 +26,45 @@ public class GameManager : MonoBehaviour
 
     public PlayerState GetPlayer(int index) => players[index];
 
-    private void OnEnable() => GameEvents.OnScientistDefeated += HandleScientistDefeated;
-    private void OnDisable() => GameEvents.OnScientistDefeated -= HandleScientistDefeated;
-
-    private void Start() => StartGame();
-
-    public void StartGame()
+    private void OnEnable()
     {
-        if (player0Team.Count == 0 || player1Team.Count == 0 || startingCards.Count == 0)
+        GameEvents.OnScientistDefeated += HandleScientistDefeated;
+        GameEvents.OnScientistChosen += HandleScientistChosen;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.OnScientistDefeated -= HandleScientistDefeated;
+        GameEvents.OnScientistChosen -= HandleScientistChosen;
+    }
+
+    private void HandleScientistChosen(ScientistData chosen)
+    {
+        if (IsStarted) return;
+        StartGame(chosen, PickOpponent(chosen));
+    }
+
+    // The computer gets a random scientist different from the player's.
+    private ScientistData PickOpponent(ScientistData chosen)
+    {
+        var options = new List<ScientistData>(roster);
+        options.Remove(chosen);
+        if (options.Count == 0) return chosen;
+        return options[Random.Range(0, options.Count)];
+    }
+
+    public void StartGame(ScientistData human, ScientistData computer)
+    {
+        if (human == null || computer == null || startingCards.Count == 0)
         {
-            Debug.LogError("GameManager: assign both teams and the starting cards in the Inspector.");
+            Debug.LogError("GameManager: assign the roster and starting cards in the Inspector.");
             return;
         }
 
         players = new PlayerState[]
         {
-            new PlayerState(0, player0Team, BuildDeck()),
-            new PlayerState(1, player1Team, BuildDeck())
+            new PlayerState(0, new[] { human }, BuildDeck()),
+            new PlayerState(1, new[] { computer }, BuildDeck())
         };
 
         turnManager = new TurnManager(players, cardsPerTurn);

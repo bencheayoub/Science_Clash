@@ -16,6 +16,7 @@ public class CardView : MonoBehaviour
 
     public void Bind(CardData data)
     {
+        artworkImage.preserveAspect = true;
         transform.localScale = Vector3.one;
         Data = data;
         nameText.text = data.CardName;

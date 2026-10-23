@@ -19,6 +19,7 @@ public static class GameEvents
     public static event Action<ICombatant> OnScientistDefeated;
     public static event Action<CardData> OnCardClicked;
     public static event Action OnEndTurnClicked;
+    public static event Action<ScientistData> OnScientistChosen;
 
     // ---- Raise methods (events can only be invoked from inside this class) ----
     public static void RaiseGameStarted() => OnGameStarted?.Invoke();
@@ -32,7 +33,7 @@ public static class GameEvents
     public static void RaiseScientistDefeated(ICombatant who) => OnScientistDefeated?.Invoke(who);
     public static void RaiseCardClicked(CardData card) => OnCardClicked?.Invoke(card);
     public static void RaiseEndTurnClicked() => OnEndTurnClicked?.Invoke();
-
+    public static void RaiseScientistChosen(ScientistData data) => OnScientistChosen?.Invoke(data);
     // Static events survive between Play sessions when Domain Reload is off,
     // so we clear them on startup to avoid duplicate subscriptions.
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
@@ -49,5 +50,6 @@ public static class GameEvents
         OnScientistDefeated = null;
         OnCardClicked = null;
         OnEndTurnClicked = null;
+        OnScientistChosen = null;
     }
 }
