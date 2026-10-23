@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Strike
   description: Deal 3 damage.
-  artwork: {fileID: 0}
+  artwork: {fileID: 7894308883384308476, guid: 7796fdff302f311008f6a93f846c7515, type: 3}
   cost: 1
   targetType: 0
   effects:

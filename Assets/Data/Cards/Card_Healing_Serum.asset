@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Healing Serum
   description: Restore 6 health.
-  artwork: {fileID: 0}
+  artwork: {fileID: -8768776784138013702, guid: 176df74424d68497baf6e0adba2c2725, type: 3}
   cost: 2
   targetType: 1
   effects:

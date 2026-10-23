@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Overclock
   description: Deal 12 damage.
-  artwork: {fileID: 0}
+  artwork: {fileID: -7673552690113409405, guid: f097f7575ec169749a7e82e112c9c7c9, type: 3}
   cost: 4
   targetType: 0
   effects:

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Acid Flask
   description: Deal 9 damage.
-  artwork: {fileID: 0}
+  artwork: {fileID: 202458715953090780, guid: 1d94af8e7cbb83d7a988e64eea31e4e8, type: 3}
   cost: 3
   targetType: 0
   effects:
