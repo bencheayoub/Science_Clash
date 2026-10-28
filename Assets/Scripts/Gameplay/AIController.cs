@@ -1,18 +1,30 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>Timing only: waits, asks AIStrategy what to do, and acts through IMatchActions.</summary>
 public class AIController : MonoBehaviour
 {
-    [SerializeField] private GameManager game;
+    [Tooltip("Any component implementing IMatchActions (the GameManager).")]
+    [SerializeField] private MonoBehaviour game;
     [SerializeField] private int aiPlayerIndex = 1;
     [SerializeField, Min(0.1f)] private float thinkDelay = 1f;
+
+    private IMatchActions match;
+    private readonly AIStrategy strategy = new AIStrategy();
+
+    private void Awake()
+    {
+        match = game as IMatchActions;
+        if (match == null)
+            Debug.LogError("AIController: 'game' must reference a component that implements IMatchActions.", this);
+    }
 
     private void OnEnable() => GameEvents.OnTurnStarted += HandleTurnStarted;
     private void OnDisable() => GameEvents.OnTurnStarted -= HandleTurnStarted;
 
     private void HandleTurnStarted(int player)
     {
-        if (player == aiPlayerIndex)
+        if (match != null && player == aiPlayerIndex)
             StartCoroutine(PlayTurn());
     }
 
@@ -20,43 +32,15 @@ public class AIController : MonoBehaviour
     {
         yield return new WaitForSeconds(thinkDelay);
 
-        while (!game.IsGameOver)
+        while (!match.IsGameOver)
         {
-            CardData card = ChooseCard();
+            CardData card = strategy.ChooseCard(match.GetPlayer(aiPlayerIndex));
             if (card == null) break;                                    // nothing useful left
-            if (!game.TryPlayCard(aiPlayerIndex, card)) break;          // safety: never loop forever
+            if (!match.TryPlayCard(aiPlayerIndex, card)) break;         // safety: never loop forever
             yield return new WaitForSeconds(thinkDelay);
         }
 
-        if (!game.IsGameOver)
-            game.EndTurn();
-    }
-
-    // Simple heuristic: heal only when hurt, otherwise play the most expensive affordable card.
-    private CardData ChooseCard()
-    {
-        PlayerState me = game.GetPlayer(aiPlayerIndex);
-        Scientist self = me.ActiveScientist;
-        if (self == null) return null;
-
-        bool hurt = self.CurrentHealth <= self.MaxHealth * 0.6f;
-        CardData best = null;
-        int bestScore = int.MinValue;
-
-        foreach (CardData card in me.Hand.Cards)
-        {
-            if (card.Cost > me.Energy) continue;
-
-            bool isHeal = card.TargetType == CardTargetType.Self;
-            if (isHeal && !hurt) continue;
-
-            int score = card.Cost + (isHeal ? 100 : 0);   // when hurt, healing comes first
-            if (score > bestScore)
-            {
-                best = card;
-                bestScore = score;
-            }
-        }
-        return best;
+        if (!match.IsGameOver)
+            match.EndTurn();
     }
 }
