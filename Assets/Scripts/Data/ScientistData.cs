@@ -8,6 +8,10 @@ public class ScientistData : ScriptableObject
     [SerializeField, Min(1)] private int maxHealth = 30;
     [SerializeField] private Sprite portrait;
 
+    [Header("Look")]
+    [Tooltip("Signature color used for this scientist's VFX, card frames and glow.")]
+    [SerializeField] private Color accentColor = Color.white;
+
     [Header("Abilities")]
     [Tooltip("Cards only this scientist has. They are added to this scientist's deck on top of the shared cards.")]
     [SerializeField] private List<CardData> signatureCards = new List<CardData>();
@@ -15,5 +19,6 @@ public class ScientistData : ScriptableObject
     public string ScientistName => scientistName;
     public int MaxHealth => maxHealth;
     public Sprite Portrait => portrait;
+    public Color AccentColor => accentColor;
     public IReadOnlyList<CardData> SignatureCards => signatureCards;
 }

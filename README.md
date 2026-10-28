@@ -65,6 +65,23 @@ The UI never calls gameplay classes to change state, and gameplay never referenc
 - **`CardInputController`** is the only bridge from UI clicks to game rules. Clicks become events, and this controller translates them into method calls.
 - **`ScientistSelectionView`** builds the selection screen from the roster, and **`GameOverView`** shows the result and restarts the scene.
 
+## Art direction
+Dark lab terminal: deep navy surfaces with glowing cyan and amber accents.
+All colors live in one `UiPalette` asset; UI, shaders and VFX read from it.
+
+| Role | Hex |
+|---|---|
+| Background | #0B1220 |
+| Panel | #131C2E |
+| Primary | #3DD9FF |
+| Secondary | #FFB347 |
+| Damage | #FF4D6D |
+| Heal | #5CFFA8 |
+| Text | #E8F1FF |
+
+Fonts: Chakra Petch (titles), Space Grotesk (body).
+Each scientist has an accent color (`ScientistData.AccentColor`) used for their VFX and card glow.
+
 ---
 
 ## 4. Example: what happens when a card is played
