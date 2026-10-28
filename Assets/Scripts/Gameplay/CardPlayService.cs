@@ -17,6 +17,8 @@ public class CardPlayService
         if (!player.Hand.Remove(card)) return false;   // card must really be in hand
         player.TrySpendEnergy(card.Cost);
 
+        GameEvents.RaiseCardPlayStarted(playerIndex, card);   // before effects, so presentation can lead the hit
+
         card.Resolve(new EffectContext(playerIndex, source, target));
 
         player.Deck.Discard(card);
