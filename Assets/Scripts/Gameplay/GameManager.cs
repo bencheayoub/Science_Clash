@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 /// <summary>Owns match lifecycle and exposes it to controllers. Details live in MatchSetup, WinChecker, TurnManager, CardPlayService.</summary>
 public class GameManager : MonoBehaviour, IMatchActions
@@ -12,8 +13,11 @@ public class GameManager : MonoBehaviour, IMatchActions
     [SerializeField, Min(1)] private int copiesPerCard = 2;
 
     [Header("Rules")]
-    [SerializeField, Min(1)] private int startingHandSize = 3;
-    [SerializeField, Min(1)] private int cardsPerTurn = 1;
+    [Tooltip("Cards dealt at the start. The hand is refilled to this size at the start of every turn.")]
+    [FormerlySerializedAs("startingHandSize")]
+    [SerializeField, Min(1)] private int handSize = 3;
+    [Tooltip("ON: unplayed cards are discarded and you get a fresh hand every turn. OFF: unplayed cards stay and the hand is refilled.")]
+    [SerializeField] private bool discardHandEachTurn = true;
 
     private PlayerState[] players;
     private MatchSetup setup;
@@ -30,7 +34,7 @@ public class GameManager : MonoBehaviour, IMatchActions
 
     private void Awake()
     {
-        setup = new MatchSetup(roster, startingCards, copiesPerCard, startingHandSize);
+        setup = new MatchSetup(roster, startingCards, copiesPerCard, handSize);
     }
 
     private void OnEnable()
@@ -60,7 +64,7 @@ public class GameManager : MonoBehaviour, IMatchActions
         }
 
         players = setup.CreatePlayers(human, computer);
-        turnManager = new TurnManager(players, cardsPerTurn);
+        turnManager = new TurnManager(players, handSize, discardHandEachTurn);
         cardPlayService = new CardPlayService(players);
 
         IsStarted = true;
