@@ -35,10 +35,10 @@ public class TurnHUDView : MonoBehaviour
     private void Refresh()
     {
         bool humanTurn = game.CurrentPlayerIndex == humanPlayerIndex;
-    PlayerState current = game.GetPlayer(game.CurrentPlayerIndex);
+        PlayerState current = game.GetPlayer(game.CurrentPlayerIndex);
 
-    turnText.text = humanTurn ? "Your turn" : "Computer's turn";
-    energyText.text = $"Energy {current.Energy} / {current.MaxEnergy}";
-    endTurnButton.interactable = humanTurn;
-        }
+        turnText.text = humanTurn ? "Your turn" : "Computer's turn";
+        energyText.text = $"Energy {current.Energy} / {current.MaxEnergy}";
+        endTurnButton.interactable = humanTurn;
+    }
 }
