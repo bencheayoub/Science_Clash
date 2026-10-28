@@ -60,6 +60,7 @@
     <Compile Include="Assets/Scripts/Effects/HealEffect.cs" />
     <Compile Include="Assets/Scripts/Core/ICombatant.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_TextSelector_A.cs" />
+    <Compile Include="Assets/Scripts/Gameplay/WinChecker.cs" />
     <Compile Include="Assets/Scripts/UI/ScientistSelectionView.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/Benchmark02.cs" />
     <Compile Include="Assets/Scripts/Gameplay/AIController.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/VertexShakeB.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/VertexJitter.cs" />
+    <Compile Include="Assets/Scripts/Gameplay/AIStrategy.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_UiFrameRateCounter.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/VertexZoom.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_TextSelector_B.cs" />
@@ -77,6 +79,7 @@
     <Compile Include="Assets/Scripts/Core/GameEvents.cs" />
     <Compile Include="Assets/Scripts/Data/CardData.cs" />
     <Compile Include="Assets/Scripts/Gameplay/Deck.cs" />
+    <Compile Include="Assets/Scripts/Gameplay/MatchSetup.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets/Scripts/Gameplay/CardPlayService.cs" />
     <Compile Include="Assets/Scripts/Core/EffectContext.cs" />
@@ -110,6 +113,7 @@
     <Compile Include="Assets/Scripts/UI/ScientistPanelView.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TeleType.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_TextEventCheck.cs" />
+    <Compile Include="Assets/Scripts/Gameplay/IMatchActions.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TextMeshProFloatingText.cs" />
     <Compile Include="Assets/Scripts/Data/CardTargetType.cs" />
   </ItemGroup>
