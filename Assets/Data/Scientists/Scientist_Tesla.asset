@@ -15,6 +15,7 @@ MonoBehaviour:
   scientistName: Tesla
   maxHealth: 30
   portrait: {fileID: -3609679208278219701, guid: fb82e24d8245c0e04a9420bcd02c3515, type: 3}
+  accentColor: {r: 0.3019608, g: 0.72156864, b: 1, a: 1}
   signatureCards:
   - {fileID: 11400000, guid: e100bb67e2a6684a6b6c56f8066d7f0e, type: 2}
   - {fileID: 11400000, guid: 9b3d22877bae88f08b2af80783bf3336, type: 2}

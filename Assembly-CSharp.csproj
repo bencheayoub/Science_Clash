@@ -61,10 +61,12 @@
     <Compile Include="Assets/Scripts/Core/ICombatant.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_TextSelector_A.cs" />
     <Compile Include="Assets/Scripts/Gameplay/WinChecker.cs" />
+    <Compile Include="Assets/Scripts/Data/UiPalette.cs" />
     <Compile Include="Assets/Scripts/UI/ScientistSelectionView.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/Benchmark02.cs" />
     <Compile Include="Assets/Scripts/Effects/MultiHitEffect.cs" />
     <Compile Include="Assets/Scripts/Gameplay/AIController.cs" />
+    <Compile Include="Assets/Scripts/UI/PauseMenuView.cs" />
     <Compile Include="Assets/Scripts/Gameplay/PlayerState.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_ExampleScript_01.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMPro_InstructionOverlay.cs" />
@@ -119,6 +121,7 @@
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_TextEventCheck.cs" />
     <Compile Include="Assets/Scripts/Gameplay/IMatchActions.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TextMeshProFloatingText.cs" />
+    <Compile Include="Assets/Scripts/UI/TitleView.cs" />
     <Compile Include="Assets/Scripts/Data/CardTargetType.cs" />
   </ItemGroup>
   <ItemGroup>

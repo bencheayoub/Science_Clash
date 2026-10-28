@@ -15,6 +15,7 @@ MonoBehaviour:
   scientistName: Curie
   maxHealth: 30
   portrait: {fileID: 4944963861512524587, guid: 13ad8e2ddeef1a179bd8628f18564106, type: 3}
+  accentColor: {r: 0.41960785, g: 1, b: 0.61960787, a: 1}
   signatureCards:
   - {fileID: 11400000, guid: 70981a0224557461283426f237408777, type: 2}
   - {fileID: 11400000, guid: 37e0677798ff7d7c18c2e7e5749e6eb5, type: 2}
