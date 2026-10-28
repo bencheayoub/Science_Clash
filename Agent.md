@@ -37,9 +37,9 @@ Read this fully before making changes.
 - **Events:** every game event is declared in one static class, `GameEvents`. No static events anywhere else. Systems raise and subscribe through `GameEvents` only.
   - Subscribe in `OnEnable`, unsubscribe in `OnDisable`.
 - **Decoupling:** systems never reference each other's concrete classes directly. Communicate via `GameEvents` or small interfaces.
-- **Sub-systems:** each system is split into focused classes with a single responsibility (for example `TurnSystem`, `AbilityResolver`, `TargetingSystem`, `OpponentAI`). If a class needs "and" to describe it, split it.
+- **Sub-systems:** each system is split into focused classes with a single responsibility (for example `TurnManager`, `CardPlayService`, `AIController`). If a class needs "and" to describe it, split it.
 - **Data:** scientists, cards, abilities and effects are ScriptableObjects. Adding content must not require changing code.
-  - Abilities are lists of `AbilityEffect` ScriptableObjects (Damage, Heal, Shield, Stun, ...).
+  - Abilities are lists of `EffectData` ScriptableObjects (Damage, Heal, Shield, Stun, ...).
 - **Pure logic vs. presentation:** battle state and rules contain no `MonoBehaviour`/UI/VFX code. Presentation listens to events and reacts.
 - **Update loops:** avoid logic in `Update`. Prefer events, coroutines or tweens.
 - **No magic strings or numbers:** use constants, enums or serialized fields. Shader property IDs via `Shader.PropertyToID`.
@@ -56,19 +56,18 @@ Read this fully before making changes.
 
 ## Folder structure
 
-```
 Assets/
-  Scripts/
-    Core/        GameEvents, shared interfaces, utilities
-    Battle/      turn system, ability resolver, targeting, AI
-    Cards/       card and scientist data classes, effects
-    UI/          menus, hand, HUD
-    VFX/         scripts that drive shaders and particles
-  Data/          ScriptableObject assets (Scientists, Cards, Effects)
-  Shaders/       shader graphs and HLSL shaders
-  VFX/           particle prefabs
-  Art/  Audio/  Scenes/  Prefabs/
-```
+Scripts/
+Core/ GameEvents, EffectContext, ICombatant, shared interfaces
+Data/ ScriptableObject definitions (CardData, ScientistData, ...)
+Effects/ EffectData base class and concrete effects (Damage, Heal, ...)
+Gameplay/ game flow and rules (GameManager, TurnManager, CardPlayService, AIController, Deck, Hand)
+UI/ menus, hand, HUD, views
+Shaders/ shader graphs and HLSL shaders
+VFX/ particle prefabs
+
+
+Put new scripts in the existing folder that fits. Do not create new top-level script folders without asking.
 
 ## Shaders and VFX
 
