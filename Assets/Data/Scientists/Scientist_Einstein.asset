@@ -15,3 +15,10 @@ MonoBehaviour:
   scientistName: Einstein
   maxHealth: 30
   portrait: {fileID: 1157690336138879057, guid: 4ed00523ba7ac9f52b48733cc723055b, type: 3}
+  signatureCards:
+  - {fileID: 11400000, guid: 0a11ee186e5611a309969a937f3afd18, type: 2}
+  - {fileID: 11400000, guid: 310d80cf4e4d7779aa163cdea40962d0, type: 2}
+  - {fileID: 11400000, guid: 61f14b6e57205dea4a00a21437322621, type: 2}
+  - {fileID: 11400000, guid: 740203f2e313fe1a4aa8f4102f56054e, type: 2}
+  - {fileID: 11400000, guid: d816443781e49e2b89a8f350a29521c8, type: 2}
+  - {fileID: 11400000, guid: ddbbd9f1e740931849367bd0c5f3ff2d, type: 2}

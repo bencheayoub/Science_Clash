@@ -15,3 +15,10 @@ MonoBehaviour:
   scientistName: Lovelace
   maxHealth: 30
   portrait: {fileID: 5905664392754226892, guid: 0e209b4fc0cd19a82a5c0164c489be58, type: 3}
+  signatureCards:
+  - {fileID: 11400000, guid: 28f60d33dc1239943900ab40d18facad, type: 2}
+  - {fileID: 11400000, guid: 7f3c421da6958d9229bec7d2738fbaa4, type: 2}
+  - {fileID: 11400000, guid: e7fdb4d524beca3739dcc3a223660f46, type: 2}
+  - {fileID: 11400000, guid: 1f6b59cf9a953b17ab1ef80b4fb805ca, type: 2}
+  - {fileID: 11400000, guid: 0f61c96ad4f094892b2130404fd19ffe, type: 2}
+  - {fileID: 11400000, guid: 6bc7a2f1c7f876003825a7d8e4e8647e, type: 2}

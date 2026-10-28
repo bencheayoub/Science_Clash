@@ -15,3 +15,10 @@ MonoBehaviour:
   scientistName: Tesla
   maxHealth: 30
   portrait: {fileID: -3609679208278219701, guid: fb82e24d8245c0e04a9420bcd02c3515, type: 3}
+  signatureCards:
+  - {fileID: 11400000, guid: e100bb67e2a6684a6b6c56f8066d7f0e, type: 2}
+  - {fileID: 11400000, guid: 9b3d22877bae88f08b2af80783bf3336, type: 2}
+  - {fileID: 11400000, guid: 972d89b127485a3fd82e909dded38360, type: 2}
+  - {fileID: 11400000, guid: 73b230cdb90b3ec53aa7f7f054ca3882, type: 2}
+  - {fileID: 11400000, guid: cc6236100265209408b4f073d9d9e54a, type: 2}
+  - {fileID: 11400000, guid: 67ceb5a0ed8a850e5853b18f0cc6f64b, type: 2}

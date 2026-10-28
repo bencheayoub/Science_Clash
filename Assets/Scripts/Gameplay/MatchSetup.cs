@@ -37,8 +37,8 @@ public class MatchSetup
     {
         var players = new PlayerState[]
         {
-            new PlayerState(0, new[] { human }, BuildDeck()),
-            new PlayerState(1, new[] { computer }, BuildDeck())
+            new PlayerState(0, new[] { human }, BuildDeck(human)),
+            new PlayerState(1, new[] { computer }, BuildDeck(computer))
         };
 
         foreach (PlayerState p in players)
@@ -47,12 +47,22 @@ public class MatchSetup
         return players;
     }
 
-    private List<CardData> BuildDeck()
+    // Shared cards for everyone, plus the scientist's own signature cards.
+    private List<CardData> BuildDeck(ScientistData scientist)
     {
         var deck = new List<CardData>();
-        foreach (CardData card in startingCards)
+        AddCopies(deck, startingCards);
+        AddCopies(deck, scientist.SignatureCards);
+        return deck;
+    }
+
+    private void AddCopies(List<CardData> deck, IReadOnlyList<CardData> cards)
+    {
+        foreach (CardData card in cards)
+        {
+            if (card == null) continue;
             for (int i = 0; i < copiesPerCard; i++)
                 deck.Add(card);
-        return deck;
+        }
     }
 }

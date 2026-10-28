@@ -15,3 +15,10 @@ MonoBehaviour:
   scientistName: Newton
   maxHealth: 30
   portrait: {fileID: -2043073133013973665, guid: 3142979bc8efc0dba9707fd7099d704a, type: 3}
+  signatureCards:
+  - {fileID: 11400000, guid: 0214446118df06662a3c84026ba4745e, type: 2}
+  - {fileID: 11400000, guid: 5ca940660bfa19ad9bbb96a84b15f2ce, type: 2}
+  - {fileID: 11400000, guid: 10524aaac0a06ed4baaa1d3befa2ff9e, type: 2}
+  - {fileID: 11400000, guid: a0bcd4c9e2852db37a4a1ec4c04b4cf1, type: 2}
+  - {fileID: 11400000, guid: 93738fbe2cd2c885daac9b3e3405d4c9, type: 2}
+  - {fileID: 11400000, guid: 42ffd29489422b2b5aeba1033a7d17ce, type: 2}

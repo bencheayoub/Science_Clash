@@ -15,3 +15,10 @@ MonoBehaviour:
   scientistName: Turing
   maxHealth: 30
   portrait: {fileID: -1551622918192118558, guid: 8437d94f7e4dc5891a1eac14fb0064e8, type: 3}
+  signatureCards:
+  - {fileID: 11400000, guid: 89b3eabed675d34b999c677d11df1d08, type: 2}
+  - {fileID: 11400000, guid: 2cf365b09d4b6ed4d9dfa0bd735c7fb7, type: 2}
+  - {fileID: 11400000, guid: da5cd6d5498b5f288b82cc82bd3bd693, type: 2}
+  - {fileID: 11400000, guid: 1460c68120df08331ae9e9908e4c7634, type: 2}
+  - {fileID: 11400000, guid: f062a7b6b397baec882307283ff1e828, type: 2}
+  - {fileID: 11400000, guid: b68eafb2bd57cf4eaa873ae241c714e1, type: 2}
