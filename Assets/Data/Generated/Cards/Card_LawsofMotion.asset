@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Laws of Motion
   description: Hit 3 times for 2 damage each.
-  artwork: {fileID: 0}
+  artwork: {fileID: -8808755496066218293, guid: 121cbc02fb0a07b6690c060720aac91a, type: 3}
   cost: 2
   targetType: 0
   effects:

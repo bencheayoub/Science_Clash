@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Half-Life
   description: Heal 3 health.
-  artwork: {fileID: 0}
+  artwork: {fileID: 2903848411162822477, guid: c174a432269d25b44a62d7b3b584129f, type: 3}
   cost: 1
   targetType: 1
   effects:

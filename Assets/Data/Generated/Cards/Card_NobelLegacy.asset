@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Nobel Legacy
   description: Deal 6 damage and heal 6.
-  artwork: {fileID: 0}
+  artwork: {fileID: -7023080013790042470, guid: afef6c8e21508db81ae6c78f111c52ff, type: 3}
   cost: 3
   targetType: 0
   effects:

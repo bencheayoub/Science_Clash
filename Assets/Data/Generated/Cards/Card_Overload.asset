@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Overload
   description: Deal 10 damage. You take 4 damage.
-  artwork: {fileID: 0}
+  artwork: {fileID: -4373107828292431366, guid: 9d5b02fdad38bb13b879fa74689e7230, type: 3}
   cost: 3
   targetType: 0
   effects:

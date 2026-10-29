@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Halting Problem
   description: Deal 4 damage, or 13 if the target is at 40% health or less.
-  artwork: {fileID: 0}
+  artwork: {fileID: -3943296411657477942, guid: 245f8d81df207605581855cd72fc7ecf, type: 3}
   cost: 3
   targetType: 0
   effects:

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Poetical Science
   description: Heal 8 health.
-  artwork: {fileID: 0}
+  artwork: {fileID: 2903848411162822477, guid: c174a432269d25b44a62d7b3b584129f, type: 3}
   cost: 3
   targetType: 1
   effects:

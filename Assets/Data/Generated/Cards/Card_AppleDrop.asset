@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Apple Drop
   description: Deal 3 damage.
-  artwork: {fileID: 0}
+  artwork: {fileID: 370836429328893637, guid: 35b0c8507ab3a29138f22cd9f2fbb6d7, type: 3}
   cost: 1
   targetType: 0
   effects:

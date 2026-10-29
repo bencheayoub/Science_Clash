@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Field Medic
   description: Restore 12 health.
-  artwork: {fileID: -6313007919897279824, guid: a4c65c5d501928928a8a6a6934a562ab, type: 3}
+  artwork: {fileID: 2903848411162822477, guid: c174a432269d25b44a62d7b3b584129f, type: 3}
   cost: 3
   targetType: 1
   effects:

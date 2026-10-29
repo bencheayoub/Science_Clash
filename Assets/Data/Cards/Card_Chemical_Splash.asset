@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Chemical Splash
   description: Deal 6 damage.
-  artwork: {fileID: 9112907330315092725, guid: 77770c4bba40e9c0ab7742c93b4d9026, type: 3}
+  artwork: {fileID: 370836429328893637, guid: 35b0c8507ab3a29138f22cd9f2fbb6d7, type: 3}
   cost: 2
   targetType: 0
   effects:
