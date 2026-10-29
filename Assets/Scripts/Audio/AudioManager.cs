@@ -8,7 +8,9 @@ public enum Sfx
     CardPlay,
     TurnStart,
     Victory,
-    Defeat
+    Defeat,
+    Hit,
+    Heal
 }
 
 /// <summary>
@@ -35,6 +37,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip turnStart;
     [SerializeField] private AudioClip victory;
     [SerializeField] private AudioClip defeat;
+    [SerializeField] private AudioClip hit;
+    [SerializeField] private AudioClip heal;
 
     private const float MinGap = 0.05f;   // stops the same sound from machine-gunning
     private AudioSource musicSource;
@@ -72,6 +76,8 @@ public class AudioManager : MonoBehaviour
         GameEvents.OnCardDrawn += HandleCardDrawn;
         GameEvents.OnCardPlayStarted += HandleCardPlayStarted;
         GameEvents.OnGameOver += HandleGameOver;
+        GameEvents.OnDamageDealt += HandleDamageDealt;
+        GameEvents.OnHealed += HandleHealed;
     }
 
     private void OnDisable()
@@ -80,6 +86,8 @@ public class AudioManager : MonoBehaviour
         GameEvents.OnCardDrawn -= HandleCardDrawn;
         GameEvents.OnCardPlayStarted -= HandleCardPlayStarted;
         GameEvents.OnGameOver -= HandleGameOver;
+        GameEvents.OnDamageDealt -= HandleDamageDealt;
+        GameEvents.OnHealed -= HandleHealed;
     }
 
     private void HandleTurnStarted(int player)
@@ -96,6 +104,16 @@ public class AudioManager : MonoBehaviour
 
     private void HandleGameOver(int winner) =>
         Play(winner == humanPlayerIndex ? Sfx.Victory : Sfx.Defeat);
+
+    private void HandleDamageDealt(ICombatant target, int amount)
+    {
+        if (amount > 0) Play(Sfx.Hit);
+    }
+
+    private void HandleHealed(ICombatant target, int amount)
+    {
+        if (amount > 0) Play(Sfx.Heal);
+    }
 
     /// <summary>Call from anywhere: AudioManager.Play(Sfx.ButtonClick). Safe if no AudioManager exists.</summary>
     public static void Play(Sfx sfx)
@@ -127,6 +145,8 @@ public class AudioManager : MonoBehaviour
             case Sfx.TurnStart: return turnStart;
             case Sfx.Victory: return victory;
             case Sfx.Defeat: return defeat;
+            case Sfx.Hit: return hit;
+            case Sfx.Heal: return heal;
             default: return null;
         }
     }

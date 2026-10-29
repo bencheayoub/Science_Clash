@@ -29,6 +29,7 @@ public class CardHolo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private float amount;            // 0..1 foil strength
     private Vector2 pointer;         // cursor on the card, -0.5..0.5
     private Vector2 smoothPointer;
+    private float appear = 1f;      // pop-in scale, driven by CardView while the card appears
 
     /// <summary>Gives every Image on this card the holo material (one private copy per card).</summary>
     public void Setup(Material holoMaterial, Color tint)
@@ -51,6 +52,13 @@ public class CardHolo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         hovered = false;
         enabled = false;
+    }
+
+    /// <summary>Scales the whole card (used by the pop-in). The foil keeps working on top of it.</summary>
+    public void SetAppearScale(float scale)
+    {
+        appear = scale;
+        if (materialCopy != null) Apply();
     }
 
     public void OnPointerEnter(PointerEventData eventData) => hovered = true;
@@ -85,7 +93,7 @@ public class CardHolo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         Vector2 tilt = smoothPointer * 2f;   // -1..1
         transform.localRotation = Quaternion.Euler(tilt.y * MaxTiltDegrees, -tilt.x * MaxTiltDegrees, 0f);
-        transform.localScale = Vector3.one * Mathf.Lerp(1f, HoverScale, amount);
+        transform.localScale = Vector3.one * (Mathf.Lerp(1f, HoverScale, amount) * appear);
 
         Rect r = rect.rect;
         Vector3 center = rect.TransformPoint(r.center);

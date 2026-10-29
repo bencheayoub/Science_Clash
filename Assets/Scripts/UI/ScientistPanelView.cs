@@ -5,6 +5,8 @@ using UnityEngine.UI;
 public class ScientistPanelView : MonoBehaviour
 {
     private const float OutlineThickness = 3f;
+    private const float BarSpeed = 6f;          // how fast the health bar slides to its new value
+    private const float FlashDuration = 0.35f;  // portrait tint after a hit or a heal
 
     [SerializeField] private GameManager game;
     [SerializeField] private int playerIndex;
@@ -23,10 +25,18 @@ public class ScientistPanelView : MonoBehaviour
     [SerializeField, Min(0.1f)] private float dissolveDuration = 1.2f;
 
     private bool defeatPlayed;
+    private bool barInitialized;
+    private float targetRatio = 1f;
+    private float shownRatio = 1f;
+    private float flashTimer;
+    private Color flashColor = Color.white;
+
+    private Color DamageColor => palette != null ? palette.Damage : Color.red;
+    private Color HealColor => palette != null ? palette.Heal : Color.green;
 
     private void OnEnable()
     {
-        GameEvents.OnGameStarted += Refresh;
+        GameEvents.OnGameStarted += HandleGameStarted;
         GameEvents.OnTurnStarted += HandleTurnStarted;
         GameEvents.OnDamageDealt += HandleDamageDealt;
         GameEvents.OnHealed += HandleHealed;
@@ -35,26 +45,40 @@ public class ScientistPanelView : MonoBehaviour
 
     private void OnDisable()
     {
-        GameEvents.OnGameStarted -= Refresh;
+        GameEvents.OnGameStarted -= HandleGameStarted;
         GameEvents.OnTurnStarted -= HandleTurnStarted;
         GameEvents.OnDamageDealt -= HandleDamageDealt;
         GameEvents.OnHealed -= HandleHealed;
         GameEvents.OnScientistDefeated -= HandleDefeated;
     }
 
+    private void HandleGameStarted() => Refresh(snapBar: true);
     private void HandleTurnStarted(int player) => Refresh();
-    private void HandleDamageDealt(ICombatant target, int amount) => Refresh();
-    private void HandleHealed(ICombatant target, int amount) => Refresh();
+
+    private void HandleDamageDealt(ICombatant target, int amount)
+    {
+        Refresh();
+        if (amount > 0 && IsMine(target)) ShowFeedback(DamageColor, $"-{amount}");
+    }
+
+    private void HandleHealed(ICombatant target, int amount)
+    {
+        Refresh();
+        if (amount > 0 && IsMine(target)) ShowFeedback(HealColor, $"+{amount}");
+    }
 
     private void HandleDefeated(ICombatant who)
     {
         Refresh();
 
         if (defeatPlayed || game == null || !game.IsStarted) return;
-        if (!ReferenceEquals(who, GetScientist())) return;   // someone else's scientist
+        if (!IsMine(who)) return;   // someone else's scientist
 
         PlayDefeatEffect();
     }
+
+    private bool IsMine(ICombatant target) =>
+        game != null && game.IsStarted && ReferenceEquals(target, GetScientist());
 
     private Scientist GetScientist()
     {
@@ -62,7 +86,30 @@ public class ScientistPanelView : MonoBehaviour
         return player.ActiveScientist ?? player.Scientists[0];
     }
 
-    private void Refresh()
+    private void Update()
+    {
+        float dt = Time.unscaledDeltaTime;
+
+        // The bar slides toward the real value instead of jumping.
+        if (!Mathf.Approximately(shownRatio, targetRatio))
+        {
+            shownRatio = Mathf.Lerp(shownRatio, targetRatio, 1f - Mathf.Exp(-BarSpeed * dt));
+            if (Mathf.Abs(shownRatio - targetRatio) < 0.002f) shownRatio = targetRatio;
+
+            healthBar.value = shownRatio;
+            TintHealthBar(shownRatio);
+        }
+
+        // The portrait is tinted, then fades back to normal.
+        if (flashTimer > 0f)
+        {
+            flashTimer -= dt;
+            float k = Mathf.Clamp01(flashTimer / FlashDuration);
+            portraitImage.color = Color.Lerp(Color.white, flashColor, k);
+        }
+    }
+
+    private void Refresh(bool snapBar = false)
     {
         if (game == null || !game.IsStarted) return;
 
@@ -73,9 +120,14 @@ public class ScientistPanelView : MonoBehaviour
             ? $"{scientist.CurrentHealth} / {scientist.MaxHealth}"
             : "DEFEATED";
 
-        float ratio = (float)scientist.CurrentHealth / scientist.MaxHealth;
-        healthBar.value = ratio;
-        TintHealthBar(ratio);
+        targetRatio = (float)scientist.CurrentHealth / scientist.MaxHealth;
+        if (snapBar || !barInitialized)
+        {
+            barInitialized = true;
+            shownRatio = targetRatio;
+            healthBar.value = shownRatio;
+            TintHealthBar(shownRatio);
+        }
 
         portraitImage.sprite = scientist.Data.Portrait;
         portraitImage.preserveAspect = true;
@@ -86,6 +138,19 @@ public class ScientistPanelView : MonoBehaviour
             accentOutline.effectColor = scientist.Data.AccentColor;
             accentOutline.effectDistance = new Vector2(OutlineThickness, -OutlineThickness);
         }
+    }
+
+    private void ShowFeedback(Color color, string label)
+    {
+        if (defeatPlayed) return;
+
+        flashColor = color;
+        flashTimer = FlashDuration;
+
+        Canvas canvas = portraitImage.canvas;
+        if (canvas == null) return;
+
+        FloatingNumber.Spawn(canvas.rootCanvas.transform, portraitImage.rectTransform.position, healthText, label, color);
     }
 
     // Red when low, green when full, using the palette's damage and heal colors.

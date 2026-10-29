@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class HandView : MonoBehaviour
 {
+    private const float StaggerDelay = 0.07f;   // seconds between cards when the whole hand pops in
+
+    private enum PopIn { None, WholeHand, NewestCard }
+
     [SerializeField] private GameManager game;
     [SerializeField] private CardView cardPrefab;
     [SerializeField] private Transform container;
@@ -16,7 +20,7 @@ public class HandView : MonoBehaviour
 
     private void OnEnable()
     {
-        GameEvents.OnGameStarted += Refresh;
+        GameEvents.OnGameStarted += HandleGameStarted;
         GameEvents.OnTurnStarted += HandleTurnStarted;
         GameEvents.OnCardDrawn += HandleCardDrawn;
         GameEvents.OnCardPlayStarted += HandleCardPlayStarted;
@@ -25,16 +29,23 @@ public class HandView : MonoBehaviour
 
     private void OnDisable()
     {
-        GameEvents.OnGameStarted -= Refresh;
+        GameEvents.OnGameStarted -= HandleGameStarted;
         GameEvents.OnTurnStarted -= HandleTurnStarted;
         GameEvents.OnCardDrawn -= HandleCardDrawn;
         GameEvents.OnCardPlayStarted -= HandleCardPlayStarted;
         GameEvents.OnCardPlayed -= HandleCardPlayed;
     }
 
-    private void HandleTurnStarted(int player) => Refresh();
-    private void HandleCardDrawn(int player, CardData card) => Refresh();
-    private void HandleCardPlayed(int player, CardData card) => Refresh();
+    private void HandleGameStarted() => Refresh(PopIn.WholeHand);
+
+    private void HandleTurnStarted(int player) =>
+        Refresh(player == viewedPlayer ? PopIn.WholeHand : PopIn.None);
+
+    private void HandleCardDrawn(int player, CardData card) =>
+        Refresh(player == viewedPlayer ? PopIn.NewestCard : PopIn.None);
+
+    // After a play the hand just rebuilds quietly: the played card already dissolved.
+    private void HandleCardPlayed(int player, CardData card) => Refresh(PopIn.None);
 
     // The card is still on screen at this moment: keep it and let it dissolve.
     private void HandleCardPlayStarted(int player, CardData card)
@@ -52,7 +63,7 @@ public class HandView : MonoBehaviour
     }
 
     // Rebuilds the visible hand of whoever's turn it is (hot-seat)
-    private void Refresh()
+    private void Refresh(PopIn popIn)
     {
         if (game == null || !game.IsStarted) return;
 
@@ -64,13 +75,26 @@ public class HandView : MonoBehaviour
 
         Color accent = AccentColorOf(viewedPlayer);
 
+        CardView lastView = null;
+        int index = 0;
+
         Hand hand = game.GetPlayer(viewedPlayer).Hand;
         foreach (CardData card in hand.Cards)
         {
             CardView view = Instantiate(cardPrefab, container);
             view.Bind(card);
             view.EnableHolo(holoMaterial, accent);   // foil in the scientist's accent color
+
+            if (popIn == PopIn.WholeHand)
+                view.PlayAppear(index * StaggerDelay);
+
+            lastView = view;
+            index++;
         }
+
+        // A single draw: only the card that just arrived pops in.
+        if (popIn == PopIn.NewestCard && lastView != null)
+            lastView.PlayAppear(0f);
     }
 
     private Color AccentColorOf(int player)
