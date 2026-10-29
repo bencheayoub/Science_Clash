@@ -11,6 +11,9 @@ public class HandView : MonoBehaviour
     [SerializeField] private Material dissolveMaterial;
     [SerializeField, Min(0.1f)] private float dissolveDuration = 0.6f;
 
+    [Header("Hover effect")]
+    [SerializeField] private Material holoMaterial;
+
     private void OnEnable()
     {
         GameEvents.OnGameStarted += Refresh;
@@ -59,11 +62,14 @@ public class HandView : MonoBehaviour
             Destroy(child.gameObject);
         }
 
+        Color accent = AccentColorOf(viewedPlayer);
+
         Hand hand = game.GetPlayer(viewedPlayer).Hand;
         foreach (CardData card in hand.Cards)
         {
             CardView view = Instantiate(cardPrefab, container);
             view.Bind(card);
+            view.EnableHolo(holoMaterial, accent);   // foil in the scientist's accent color
         }
     }
 

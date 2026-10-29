@@ -10,6 +10,8 @@ public class CardView : MonoBehaviour
     [SerializeField] private Image artworkImage;
     [SerializeField] private Button button;
 
+    private CardHolo holo;
+
     public CardData Data { get; private set; }
 
     private void Awake() => button.onClick.AddListener(OnClicked);
@@ -27,10 +29,23 @@ public class CardView : MonoBehaviour
         artworkImage.enabled = data.Artwork != null;   // hide the empty box if no art
     }
 
+    /// <summary>Turns on the hover foil + tilt for this card. Does nothing if no material is given.</summary>
+    public void EnableHolo(Material holoMaterial, Color tint)
+    {
+        if (holoMaterial == null) return;
+
+        if (!TryGetComponent(out holo))
+            holo = gameObject.AddComponent<CardHolo>();
+        holo.Setup(holoMaterial, tint);
+    }
+
     /// <summary>Takes the card out of play: it can't be clicked, leaves the layout, and dissolves away.</summary>
     public void PlayDissolve(Material dissolveMaterial, Color edgeColor, float duration)
     {
         button.interactable = false;
+
+        // The foil must stop first, so it never fights the dissolve material.
+        if (holo != null) holo.Freeze();
 
         // Stay exactly where we are while the other cards re-arrange.
         if (!TryGetComponent(out LayoutElement layoutElement))

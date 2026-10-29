@@ -3188,6 +3188,9 @@ MonoBehaviour:
   cardPrefab: {fileID: 5821699874117920017, guid: 7c5e4446231fac69bba9d7589ca19005, type: 3}
   container: {fileID: 1201433797}
   viewedPlayer: 0
+  dissolveMaterial: {fileID: 2100000, guid: dc21a71374a78ff06bd2d032d5f12a9a, type: 2}
+  dissolveDuration: 0.6
+  holoMaterial: {fileID: 2100000, guid: 5d96b42b0d4b35555abec2d208f7a16b, type: 2}
 --- !u!114 &1201433799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4301,6 +4304,7 @@ GameObject:
   - component: {fileID: 1489158924}
   - component: {fileID: 1489158926}
   - component: {fileID: 1489158925}
+  - component: {fileID: 1489158927}
   m_Layer: 5
   m_Name: Player2Panel
   m_TagString: Untagged
@@ -4349,6 +4353,10 @@ MonoBehaviour:
   healthText: {fileID: 644413582}
   healthBar: {fileID: 1207192550}
   portraitImage: {fileID: 1315908172}
+  palette: {fileID: 11400000, guid: 631b8f6d995814ad991548699528f9f2, type: 2}
+  accentOutline: {fileID: 1489158927}
+  dissolveMaterial: {fileID: 2100000, guid: dc21a71374a78ff06bd2d032d5f12a9a, type: 2}
+  dissolveDuration: 1.2
 --- !u!114 &1489158926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4375,6 +4383,21 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1489158927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489158923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1494228144
 GameObject:
   m_ObjectHideFlags: 0
@@ -5626,6 +5649,7 @@ GameObject:
   - component: {fileID: 2129895685}
   - component: {fileID: 2129895687}
   - component: {fileID: 2129895686}
+  - component: {fileID: 2129895688}
   m_Layer: 5
   m_Name: Player1Panel
   m_TagString: Untagged
@@ -5674,6 +5698,10 @@ MonoBehaviour:
   healthText: {fileID: 894419786}
   healthBar: {fileID: 302960988}
   portraitImage: {fileID: 2093383505}
+  palette: {fileID: 11400000, guid: 631b8f6d995814ad991548699528f9f2, type: 2}
+  accentOutline: {fileID: 2129895688}
+  dissolveMaterial: {fileID: 2100000, guid: dc21a71374a78ff06bd2d032d5f12a9a, type: 2}
+  dissolveDuration: 1.2
 --- !u!114 &2129895687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5700,6 +5728,21 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &2129895688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2129895684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &2131551942
 GameObject:
   m_ObjectHideFlags: 0
