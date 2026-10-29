@@ -315,6 +315,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 54570257}
   m_CullTransparentMesh: 1
+--- !u!1 &63548672
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 63548674}
+  - component: {fileID: 63548673}
+  m_Layer: 0
+  m_Name: HitFeedback
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &63548673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 63548672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5b7e83fe92667dd48955222c9bde995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitShake
+  targets:
+  - {fileID: 2129895685}
+  - {fileID: 1489158924}
+  - {fileID: 1201433797}
+  - {fileID: 2124643916}
+  duration: 0.35
+  minStrength: 4
+  maxStrength: 22
+  strengthPerDamage: 1.5
+--- !u!4 &63548674
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 63548672}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 860.9363, y: 597.5131, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &75870631
 GameObject:
   m_ObjectHideFlags: 0
@@ -5875,3 +5928,4 @@ SceneRoots:
   - {fileID: 576274413}
   - {fileID: 1671763723}
   - {fileID: 148517729}
+  - {fileID: 63548674}
