@@ -5326,6 +5326,7 @@ GameObject:
   - component: {fileID: 1973609086}
   - component: {fileID: 1973609088}
   - component: {fileID: 1973609087}
+  - component: {fileID: 1973609089}
   m_Layer: 5
   m_Name: BattleBackground
   m_TagString: Untagged
@@ -5390,6 +5391,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1973609085}
   m_CullTransparentMesh: 1
+--- !u!114 &1973609089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973609085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 037332edfc092a7828d77514a6d12b54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitAberration
+  aberrationMaterial: {fileID: 2100000, guid: 1adde96f9a13b0463bd7cbd99494377b, type: 2}
+  duration: 0.3
+  minStrength: 0.008
+  maxStrength: 0.035
+  strengthPerDamage: 0.003
 --- !u!1 &1980016648
 GameObject:
   m_ObjectHideFlags: 0
