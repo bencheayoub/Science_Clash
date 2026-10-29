@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Card_Emc2
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: E=mc2
-  description: Deal 13 damage. You take 5 damage.
+  description: Deal 12 damage. You take 5 damage.
   artwork: {fileID: -4373107828292431366, guid: 9d5b02fdad38bb13b879fa74689e7230, type: 3}
   cost: 3
   targetType: 0
   effects:
-  - {fileID: 11400000, guid: e27e36e8305a8af698239875be80b34f, type: 2}
+  - {fileID: 11400000, guid: 3194479f1b842577dbabbd719814e0d9, type: 2}

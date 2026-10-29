@@ -31,10 +31,10 @@ public static class RosterContentGenerator
         AssignToScientist("Curie",
             MakeCard("Radium Glow", "Deal 3 damage.", 1, enemy, Damage(3)),
             MakeCard("Half-Life", "Heal 3 health.", 1, self, Heal(3)),
-            MakeCard("Polonium Strike", "Deal 4 damage and heal 4.", 2, enemy, LifeSteal(4)),
+            MakeCard("Polonium Strike", "Deal 3 damage and heal 3.", 2, enemy, LifeSteal(3)),
             MakeCard("Radioactive Decay", "Hit 3 times for 2 damage each.", 2, enemy, MultiHit(3, 2)),
-            MakeCard("Isolation", "Heal 5 health.", 2, self, Heal(5)),
-            MakeCard("Nobel Legacy", "Deal 6 damage and heal 6.", 3, enemy, LifeSteal(6)));
+            MakeCard("Isolation", "Heal 4 health.", 2, self, Heal(4)),
+            MakeCard("Nobel Legacy", "Deal 5 damage and heal 5.", 3, enemy, LifeSteal(5)));
 
         // ---------------- Newton: heavy and reliable ----------------
         AssignToScientist("Newton",
@@ -57,11 +57,11 @@ public static class RosterContentGenerator
         // ---------------- Turing: finishers ----------------
         AssignToScientist("Turing",
             MakeCard("Enigma Probe", "Deal 3 damage.", 1, enemy, Damage(3)),
-            MakeCard("Decrypt", "Deal 3 damage, or 8 if the target is at half health or less.", 2, enemy, Execute(3, 5, 0.5f)),
+            MakeCard("Decrypt", "Deal 4 damage, or 8 if the target is at half health or less.", 2, enemy, Execute(4, 4, 0.5f)),
             MakeCard("Bombe Machine", "Hit 3 times for 2 damage each.", 2, enemy, MultiHit(3, 2)),
             MakeCard("Turing Test", "Heal 5 health.", 2, self, Heal(5)),
             MakeCard("Imitation Game", "Deal 6 damage.", 2, enemy, Damage(6)),
-            MakeCard("Halting Problem", "Deal 4 damage, or 13 if the target is at 40% health or less.", 3, enemy, Execute(4, 9, 0.4f)));
+            MakeCard("Halting Problem", "Deal 5 damage, or 13 if the target is at 40% health or less.", 3, enemy, Execute(5, 8, 0.4f)));
 
         // ---------------- Lovelace: algorithms and healing ----------------
         AssignToScientist("Lovelace",
@@ -78,7 +78,7 @@ public static class RosterContentGenerator
             MakeCard("Photoelectric Effect", "Hit 3 times for 2 damage each.", 2, enemy, MultiHit(3, 2)),
             MakeCard("Time Dilation", "Heal 5 health.", 2, self, Heal(5)),
             MakeCard("Special Relativity", "Deal 7 damage. You take 2 damage.", 2, enemy, Overcharge(7, 2)),
-            MakeCard("E=mc2", "Deal 13 damage. You take 5 damage.", 3, enemy, Overcharge(13, 5)),
+            MakeCard("E=mc2", "Deal 12 damage. You take 5 damage.", 3, enemy, Overcharge(12, 5)),
             MakeCard("General Relativity", "Deal 6 damage, then hit twice for 2 damage each.", 3, enemy, Damage(6), MultiHit(2, 2)));
 
         AssetDatabase.SaveAssets();

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Card_PoloniumStrike
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Polonium Strike
-  description: Deal 4 damage and heal 4.
+  description: Deal 3 damage and heal 3.
   artwork: {fileID: -7023080013790042470, guid: afef6c8e21508db81ae6c78f111c52ff, type: 3}
   cost: 2
   targetType: 0
   effects:
-  - {fileID: 11400000, guid: 3973b1149b04a2aa48474d416d5f625f, type: 2}
+  - {fileID: 11400000, guid: ca180367cd9a55799981439713d402fd, type: 2}

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Card_Decrypt
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Decrypt
-  description: Deal 3 damage, or 8 if the target is at half health or less.
+  description: Deal 4 damage, or 8 if the target is at half health or less.
   artwork: {fileID: -3943296411657477942, guid: 245f8d81df207605581855cd72fc7ecf, type: 3}
   cost: 2
   targetType: 0
   effects:
-  - {fileID: 11400000, guid: 2bfff2c3412d4369eafc1f3f2e559ad3, type: 2}
+  - {fileID: 11400000, guid: 37f01f43bffdcc74582874326d68a50b, type: 2}
