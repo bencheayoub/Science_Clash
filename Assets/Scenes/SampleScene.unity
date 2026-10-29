@@ -1907,6 +1907,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 728979001}
   m_CullTransparentMesh: 1
+--- !u!1 &750776014
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 750776016}
+  - component: {fileID: 750776015}
+  m_Layer: 0
+  m_Name: Juice
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &750776015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 750776014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0527cdc0e1125cd6dadb269df6e3ae29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonJuiceInstaller
+--- !u!4 &750776016
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 750776014}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 851.7964, y: 616.3239, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &758202256
 GameObject:
   m_ObjectHideFlags: 0
@@ -2629,6 +2673,64 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 964849990}
   m_CullTransparentMesh: 1
+--- !u!1 &1030983768
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1030983770}
+  - component: {fileID: 1030983769}
+  m_Layer: 0
+  m_Name: Audio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1030983769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030983768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5447efb097dfc67dae4847d37f94d29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  humanPlayerIndex: 0
+  music: {fileID: 0}
+  musicVolume: 0.35
+  sfxVolume: 0.8
+  pitchVariation: 0.05
+  buttonHover: {fileID: 8300000, guid: 6c33691cb95480bce9c6af25f7e7ed38, type: 3}
+  buttonClick: {fileID: 8300000, guid: 478f2b36a3ffd846eb4674f2c3e3af7f, type: 3}
+  cardDraw: {fileID: 8300000, guid: 21464a8cd323f3b218d0a07a762737d3, type: 3}
+  cardPlay: {fileID: 8300000, guid: f250c16db0b6064038e07f3f09ab1b55, type: 3}
+  turnStart: {fileID: 8300000, guid: 1c566a3f3b2cb0a70bdc61bfb297b4b8, type: 3}
+  victory: {fileID: 8300000, guid: 5815de6027a7757a2b2341bee4d1d6d7, type: 3}
+  defeat: {fileID: 8300000, guid: f1a00611ba668fd0484433741c6a1a25, type: 3}
+  hit: {fileID: 8300000, guid: 24a4961344b51cc09a11435c9429477f, type: 3}
+  heal: {fileID: 8300000, guid: 9c3f5e0c9aac0cb3287660affe19dfed, type: 3}
+--- !u!4 &1030983770
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030983768}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 851.7964, y: 616.3239, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1110306158
 GameObject:
   m_ObjectHideFlags: 0
@@ -3877,7 +3979,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.07450981, g: 0.10980392, b: 0.18039216, a: 0.77254903}
+  m_Color: {r: 0.07450981, g: 0.10980392, b: 0.18039216, a: 0.8627451}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4723,7 +4825,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Resme
+  m_text: Resume
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -4815,7 +4917,7 @@ GameObject:
   - component: {fileID: 1569372672}
   - component: {fileID: 1569372671}
   m_Layer: 5
-  m_Name: Puased
+  m_Name: Paused
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6087,3 +6189,5 @@ SceneRoots:
   - {fileID: 1671763723}
   - {fileID: 148517729}
   - {fileID: 63548674}
+  - {fileID: 1030983770}
+  - {fileID: 750776016}
