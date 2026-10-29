@@ -27,5 +27,19 @@ public class CardView : MonoBehaviour
         artworkImage.enabled = data.Artwork != null;   // hide the empty box if no art
     }
 
+    /// <summary>Takes the card out of play: it can't be clicked, leaves the layout, and dissolves away.</summary>
+    public void PlayDissolve(Material dissolveMaterial, Color edgeColor, float duration)
+    {
+        button.interactable = false;
+
+        // Stay exactly where we are while the other cards re-arrange.
+        if (!TryGetComponent(out LayoutElement layoutElement))
+            layoutElement = gameObject.AddComponent<LayoutElement>();
+        layoutElement.ignoreLayout = true;
+        transform.SetAsLastSibling();
+
+        gameObject.AddComponent<UiDissolve>().Play(dissolveMaterial, edgeColor, duration, destroyWhenDone: true);
+    }
+
     private void OnClicked() => GameEvents.RaiseCardClicked(Data);
 }
