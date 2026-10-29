@@ -53,5 +53,7 @@ public static class GameEvents
         OnCardClicked = null;
         OnEndTurnClicked = null;
         OnScientistChosen = null;
+        OnScientistChosen = null;
+        OnCardPlayStarted = null;
     }
 }

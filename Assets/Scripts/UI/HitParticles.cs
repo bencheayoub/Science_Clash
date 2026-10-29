@@ -1,6 +1,7 @@
 using UnityEngine;
 
-// Spawns particles on a scientist's portrait when it takes damage or is healed.
+// Spawns particles on scientists' portraits: sparks on damage, sparkles on heal,
+// and a stream of sparks flying from the caster to the target when a card is played.
 public class HitParticles : MonoBehaviour
 {
     [SerializeField] private GameManager game;
@@ -13,12 +14,27 @@ public class HitParticles : MonoBehaviour
     {
         GameEvents.OnDamageDealt += HandleDamage;
         GameEvents.OnHealed += HandleHeal;
+        GameEvents.OnCardPlayStarted += HandleCardPlayStarted;
     }
 
     private void OnDisable()
     {
         GameEvents.OnDamageDealt -= HandleDamage;
         GameEvents.OnHealed -= HandleHeal;
+        GameEvents.OnCardPlayStarted -= HandleCardPlayStarted;
+    }
+
+    private void HandleCardPlayStarted(int player, CardData card)
+    {
+        if (particles == null || palette == null) return;
+        if (card.TargetType == CardTargetType.Self) return;   // self cards have no target to fly to
+        if (portraits == null || portraits.Length < 2) return;
+
+        Vector3 from = portraits[player].position;
+        Vector3 to = portraits[1 - player].position;
+
+        particles.Stream(from, to, palette.Primary, 14, 14f, 0.3f);
+        particles.Stream(from, to, Color.white, 6, 8f, 0.3f);
     }
 
     private void HandleDamage(ICombatant target, int amount)
