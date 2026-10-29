@@ -10,7 +10,8 @@ public enum Sfx
     Victory,
     Defeat,
     Hit,
-    Heal
+    Heal,
+    Zap
 }
 
 /// <summary>
@@ -39,6 +40,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip defeat;
     [SerializeField] private AudioClip hit;
     [SerializeField] private AudioClip heal;
+    [SerializeField] private AudioClip zap;
 
     private const float MinGap = 0.05f;   // stops the same sound from machine-gunning
     private AudioSource musicSource;
@@ -147,6 +149,7 @@ public class AudioManager : MonoBehaviour
             case Sfx.Defeat: return defeat;
             case Sfx.Hit: return hit;
             case Sfx.Heal: return heal;
+            case Sfx.Zap: return zap;
             default: return null;
         }
     }
