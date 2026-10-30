@@ -9,10 +9,8 @@ Built in Unity 6 (2D, URP) as the final coding challenge: a small game with a fo
 
 [▶ Watch the gameplay video](https://github.com/bencheayoub/Science_Clash/tree/main/Videos).
 
-<!-- Add 2-3 screenshots or a GIF here, for example:
-![Battle screen](docs/screenshots/battle.png)
-![Scientist selection](docs/screenshots/selection.png)
--->
+## Try my game:
+[▶ Play in your browser](https://bencheayoub.itch.io/science-clash)
 
 ## Contents
 

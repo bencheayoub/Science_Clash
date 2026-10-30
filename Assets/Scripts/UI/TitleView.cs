@@ -16,6 +16,9 @@ public class TitleView : MonoBehaviour
         panel.SetActive(true);
         playButton.onClick.AddListener(Play);
         quitButton.onClick.AddListener(Quit);
+        #if UNITY_WEBGL && !UNITY_EDITOR
+            quitButton.gameObject.SetActive(false);  
+        #endif
     }
 
     private void Play() => panel.SetActive(false);

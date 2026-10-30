@@ -25,6 +25,9 @@ public class PauseMenuView : MonoBehaviour
         resumeButton.onClick.AddListener(Resume);
         restartButton.onClick.AddListener(Restart);
         quitButton.onClick.AddListener(Quit);
+        #if UNITY_WEBGL && !UNITY_EDITOR
+            quitButton.gameObject.SetActive(false);  
+        #endif
     }
 
     private void OnEnable() => GameEvents.OnGameOver += HandleGameOver;

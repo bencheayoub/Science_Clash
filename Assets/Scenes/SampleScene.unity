@@ -2716,6 +2716,7 @@ MonoBehaviour:
   defeat: {fileID: 8300000, guid: f1a00611ba668fd0484433741c6a1a25, type: 3}
   hit: {fileID: 8300000, guid: 24a4961344b51cc09a11435c9429477f, type: 3}
   heal: {fileID: 8300000, guid: 9c3f5e0c9aac0cb3287660affe19dfed, type: 3}
+  zap: {fileID: 0}
 --- !u!4 &1030983770
 Transform:
   m_ObjectHideFlags: 0
