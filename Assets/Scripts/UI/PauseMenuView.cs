@@ -6,7 +6,8 @@ using UnityEngine.InputSystem;
 #endif
 
 /// <summary>
-/// Esc toggles a pause panel (resume / restart / quit).
+/// P or Esc toggles a pause panel (resume / restart / quit).
+/// P exists because browsers use Esc to leave fullscreen, so Esc alone doesn't work well in the web build.
 /// Put this script on the Canvas (or any object that stays active), NOT on the panel itself.
 /// </summary>
 public class PauseMenuView : MonoBehaviour
@@ -25,9 +26,10 @@ public class PauseMenuView : MonoBehaviour
         resumeButton.onClick.AddListener(Resume);
         restartButton.onClick.AddListener(Restart);
         quitButton.onClick.AddListener(Quit);
-        #if UNITY_WEBGL && !UNITY_EDITOR
-            quitButton.gameObject.SetActive(false);  
-        #endif
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        quitButton.gameObject.SetActive(false);   // browsers can't quit
+#endif
     }
 
     private void OnEnable() => GameEvents.OnGameOver += HandleGameOver;
@@ -38,7 +40,7 @@ public class PauseMenuView : MonoBehaviour
 
     private void Update()
     {
-        if (!gameOver && EscapePressed())
+        if (!gameOver && PausePressed())
             SetPaused(!isPaused);
     }
 
@@ -72,12 +74,14 @@ public class PauseMenuView : MonoBehaviour
         Time.timeScale = paused ? 0f : 1f;
     }
 
-    private static bool EscapePressed()
+    private static bool PausePressed()
     {
 #if ENABLE_INPUT_SYSTEM
-        return Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame;
+        Keyboard keyboard = Keyboard.current;
+        return keyboard != null
+            && (keyboard.pKey.wasPressedThisFrame || keyboard.escapeKey.wasPressedThisFrame);
 #else
-        return Input.GetKeyDown(KeyCode.Escape);
+        return Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape);
 #endif
     }
 }

@@ -39,7 +39,7 @@ Built in Unity 6 (2D, URP) as the final coding challenge: a small game with a fo
 | Mouse hover on a card | Holographic foil and tilt |
 | Left click on a card | Play the card |
 | End Turn button | Pass the turn to the computer |
-| Esc | Pause menu (resume / restart / quit) |
+| P or Esc | Pause menu (resume / restart / quit) |
 
 ## The scientists
 
@@ -241,7 +241,7 @@ sequenceDiagram
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/YOUR-USERNAME/YOUR-REPO.git
+   git clone https://github.com/bencheayoub/Science_Clash
    ```
 2. Open the project folder in **Unity Hub**. The first import takes a few minutes.
 3. Open `Assets/Scenes/SampleScene.unity`.
@@ -264,8 +264,6 @@ The project follows the rules in [`Agent.md`](Agent.md):
 - Repeatable tasks have a skill in `.claude/skills/`: adding a game event, adding a scientist or ability, and porting a Shadertoy shader to Unity.
 
 **Roadmap followed:** repo and setup, event manager and sub-system split, effect system, abilities and 36 cards, game flow (title and pause), visual identity, art, animated background, dissolve, holographic card, selection glow, hit feedback, particles, juice and sound, bug and balance pass, and a final lightning effect.
-
-**Use of AI:** built with AI assistance (Claude) for planning, code and shader conversion. Testing, integration and design decisions were done by me.
 
 ### Balance
 
