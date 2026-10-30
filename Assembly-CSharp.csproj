@@ -114,8 +114,8 @@
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/CameraController.cs" />
     <Compile Include="Assets/Scripts/Audio/AudioManager.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/Benchmark03.cs" />
-    <Compile Include="Assets/Scripts/UI/ScientistOptionView.cs" />
     <Compile Include="Assets/Scripts/UI/FloatingNumber.cs" />
+    <Compile Include="Assets/Scripts/UI/ScientistOptionView.cs" />
     <Compile Include="Assets/Scripts/UI/ButtonJuice.cs" />
     <Compile Include="Assets/Scripts/UI/ButtonJuiceInstaller.cs" />
     <Compile Include="Assets/Scripts/Effects/DamageEffect.cs" />
