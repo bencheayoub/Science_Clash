@@ -1,159 +1,304 @@
-# Science Clash Card Game: Technical Report
+# Science Clash
 
-**Challenge #2 (Card Game)** · Author: b.atomic
+**A 1v1 card battler where famous scientists fight with their signature cards.**
+Pick one of six scientists, spend energy to play cards, and bring the computer's scientist to zero health before it does the same to you.
 
----
+Built in Unity 6 (2D, URP) as the final coding challenge: a small game with a focus on **clean architecture** and **polish** (shaders, particles, juice and sound).
 
-## 1. Overview
+## Demo
 
-Science Clash is a turn-based 1v1 card duel built in Unity. The player picks one of six scientists, the computer receives a random different one, and both draw from a deck of eight data-defined cards. Each turn a player refills their energy to 4, draws a card, and plays cards (damage or healing) until they end the turn. The first scientist to reach 0 health loses.
+[▶ Watch the gameplay video](ADD-VIDEO-LINK-HERE)
 
-The project was built around three goals:
+<!-- Add 2-3 screenshots or a GIF here, for example:
+![Battle screen](docs/screenshots/battle.png)
+![Scientist selection](docs/screenshots/selection.png)
+-->
 
-- **Scalable:** new cards, effects and scientists without touching existing code.
-- **Decoupled:** no system knows about another.
-- **Data-driven:** content lives in ScriptableObject assets, not in code.
+## Contents
 
----
-
-## 2. Architecture: sub-systems and one event manager
-
-Feedback on my previous project asked for two things: a single owner for all events, and a division into sub-systems rather than only into systems. Both are applied here.
-
-- **Core** holds what everyone shares: `GameEvents`, `ICombatant`, `EffectContext`.
-- **Data** holds the ScriptableObject definitions: `CardData`, `ScientistData`, `CardTargetType`.
-- **Effects** holds the card logic: `EffectData`, `DamageEffect`, `HealEffect`.
-- **Gameplay** holds the rules and runtime state: `GameManager`, `TurnManager`, `CardPlayService`, `PlayerState`, `Deck`, `Hand`, `Scientist`, `AIController`.
-- **UI** holds the views and input: `CardView`, `HandView`, `ScientistPanelView`, `TurnHUDView`, `GameOverView`, `ScientistOptionView`, `ScientistSelectionView`, `CardInputController`.
-
-The UI never calls gameplay classes to change state, and gameplay never references the UI. They communicate only through events.
+- [How to play](#how-to-play)
+- [The scientists](#the-scientists)
+- [Card effects](#card-effects)
+- [Visual and audio polish](#visual-and-audio-polish)
+- [Architecture](#architecture)
+- [Challenge brief checklist](#challenge-brief-checklist)
+- [Getting started](#getting-started)
+- [Development process](#development-process)
+- [Credits](#credits)
 
 ---
 
-## 3. Why each script exists
+## How to play
 
-### Core
+1. Press **PLAY** on the title screen.
+2. **Choose your scientist.** Each of the six has 30 HP and a unique set of 6 signature cards.
+3. On your turn, **click a card** to play it. Cards cost energy, shown in the top-left corner of the card.
+4. Click **END TURN** when you're done (or out of energy). The computer then plays its turn.
+5. Win by bringing the enemy scientist to 0 HP.
 
-- **`GameEvents`** is the single static class that owns every event (12 in total: game start and over, turn start and end, card drawn, played and clicked, damage, heal, scientist defeated and chosen, end turn clicked). Events can only be raised through its `Raise...` methods, so there is one place to see everything that can happen in the game. A `ResetAll` method clears them on startup, which avoids duplicate subscriptions when Domain Reload is disabled in the editor.
-- **`ICombatant`** is the interface effects work against (name, health, `TakeDamage`, `Heal`). Effects depend on this abstraction rather than on the concrete scientist class (dependency inversion), so anything can become a target later.
-- **`EffectContext`** bundles source, target and player index into one struct. Adding information for future effects does not change every effect's method signature.
+| Input | Action |
+|---|---|
+| Mouse hover on a card | Holographic foil and tilt |
+| Left click on a card | Play the card |
+| End Turn button | Pass the turn to the computer |
+| Esc | Pause menu (resume / restart / quit) |
 
-### Data
+## The scientists
 
-- **`CardData`** is a ScriptableObject holding a card's name, cost, art, target type and a list of effects. `Resolve()` applies them in order. A card contains no logic of its own.
-- **`ScientistData`** is the fixed definition of a scientist (name, max health, portrait). It is never modified at runtime.
-- **`CardTargetType`** states whether a card targets the enemy or the player's own scientist.
+| Scientist | Style |
+|---|---|
+| Curie | Radiation and sustain (life-steal and healing) |
+| Newton | Heavy, reliable damage |
+| Tesla | Electric multi-hits and risky big hits |
+| Turing | Finishers that punish low-health targets |
+| Lovelace | Algorithmic multi-hits and healing |
+| Einstein | High risk, high reward (big damage with recoil) |
 
-### Effects
+Each scientist has a signature accent color that tints their cards, hit effects and lightning.
 
-- **`EffectData`** is an abstract ScriptableObject with one method, `Apply(context)`. This is the Strategy pattern: a card delegates to interchangeable behaviours.
-- **`DamageEffect`** and **`HealEffect`** are the two concrete behaviours. Each has a configurable amount and raises an event after applying itself.
+## Card effects
 
-### Gameplay
+| Effect | What it does |
+|---|---|
+| Damage | Deals a fixed amount of damage |
+| Heal | Restores health to yourself |
+| Life Steal | Deals damage and heals you for the same amount |
+| Multi Hit | Several separate hits (each one triggers its own hit feedback) |
+| Overcharge | Big damage, but you take recoil damage (recoil can never kill you) |
+| Execute | Bonus damage if the target is below a health threshold |
 
-- **`Scientist`** is the runtime instance of a `ScientistData`. Keeping data and runtime state separate means playing never changes the assets on disk.
-- **`Deck`, `Hand` and `PlayerState`** are plain C# classes with no scene dependency. The deck shuffles with Fisher-Yates and reshuffles its discard pile when empty. `PlayerState` holds a list of scientists, so going to three per player is a data change.
-- **`TurnManager`** owns turn order, energy refill and drawing.
-- **`CardPlayService`** owns the rules for playing a card: affordability, the card being in hand, target selection, resolving effects, discarding, and raising `OnCardPlayed`.
-- **`GameManager`** is the composition root. It builds the players, wires the services together, listens for the scientist choice and detects the winner by reacting to the defeat event.
-- **`AIController`** plays for the computer. It listens for `OnTurnStarted` and calls the same `TryPlayCard` and `EndTurn` as the human, with a simple heuristic: heal when below 60% health, otherwise spend energy on the most expensive affordable card.
+36 signature cards in total (6 per scientist). A card can combine several effects, for example *Alternating Current* = Damage + Multi Hit.
 
-### UI
+---
 
-- **`CardView`** and **`ScientistOptionView`** are reusable views that bind to any asset, so one prefab renders every card and every scientist.
-- **`HandView`, `ScientistPanelView` and `TurnHUDView`** are read-only: on each event they re-read the current state and redraw, so the UI cannot drift out of sync.
-- **`CardInputController`** is the only bridge from UI clicks to game rules. Clicks become events, and this controller translates them into method calls.
-- **`ScientistSelectionView`** builds the selection screen from the roster, and **`GameOverView`** shows the result and restarts the scene.
+## Visual and audio polish
 
-## Art direction
-Dark lab terminal: deep navy surfaces with glowing cyan and amber accents.
-All colors live in one `UiPalette` asset; UI, shaders and VFX read from it.
+### Art direction
+
+A "dark lab terminal" look: deep navy surfaces with glowing cyan and amber accents. Every color lives in one `UiPalette` asset, and UI, shaders and effects read from it instead of hardcoding colors.
 
 | Role | Hex |
 |---|---|
-| Background | #0B1220 |
-| Panel | #131C2E |
-| Primary | #3DD9FF |
-| Secondary | #FFB347 |
-| Damage | #FF4D6D |
-| Heal | #5CFFA8 |
-| Text | #E8F1FF |
+| Background | `#0B1220` |
+| Panel | `#131C2E` |
+| Primary (cyan) | `#3DD9FF` |
+| Secondary (amber) | `#FFB347` |
+| Damage | `#FF4D6D` |
+| Heal | `#5CFFA8` |
+| Text | `#E8F1FF` |
 
-Fonts: Chakra Petch (titles), Space Grotesk (body).
-Each scientist has an accent color (`ScientistData.AccentColor`) used for their VFX and card glow.
+Fonts: **Chakra Petch** for text and titles, **Electronic Highway Sign** for button labels.
 
----
+### Shaders
 
-## 4. Example: what happens when a card is played
+- **Animated background** (`BackgroundFX`): a moving, living lab backdrop.
+- **Card dissolve** (`Dissolve`): played cards and defeated scientists burn away with an edge in the scientist's accent color.
+- **Holographic card foil** (`Holo`): a rainbow sheen follows the cursor on a hovered card, tinted with the scientist's accent color, and the card tilts toward the mouse.
+- **Chromatic aberration** (`BackgroundAberration`): a short color-split flash when something is hit.
+- **Lightning** (`Lightning`): a glowing, crackling bolt jumps from the attacker's portrait to the target's whenever damage is dealt. It is tinted with the attacker's accent color, and multi-hit cards fire one bolt per hit. Big hits (10 damage or more) get a thicker bolt and a white screen flash like a thunderclap. Recoil damage (hurting yourself) gets no bolt.
+- **Duotone** (`UIDuotone`): gives the background and portraits a consistent color identity.
+- **Selection glow** on the scientist selection screen.
 
-1. The player clicks a card. `CardView` raises `OnCardClicked`.
-2. `CardInputController` receives it and calls `GameManager.TryPlayCard`.
-3. `CardPlayService` validates the play, spends energy, removes the card from the hand, and calls `CardData.Resolve`.
-4. Each `EffectData` changes the target through `ICombatant` and raises `OnDamageDealt` or `OnHealed`.
-5. If the target reaches 0 health, `Scientist` raises `OnScientistDefeated`. `GameManager` hears it and raises `OnGameOver`.
-6. The views react to the events they care about and redraw. None of them was called directly.
+### Particles
 
----
+- A custom UI particle system for ambient dust, hit bursts and the game over celebration.
 
-## 5. Patterns used
+### Juice
 
-- **Observer:** the central `GameEvents` class.
-- **Strategy:** `EffectData` and its subclasses.
-- **Data-driven design / ScriptableObjects:** cards, effects and scientists are assets.
-- **Composition over inheritance:** a card is a list of effects, so complex cards need no new code.
-- **Dependency inversion:** effects depend on `ICombatant`.
-- **Single responsibility:** turn flow, card rules and composition are in separate classes.
-- **Composition root:** only `GameManager` creates and connects the runtime objects.
+- Screen shake on hits.
+- Floating damage and heal numbers.
+- Health bar that slides smoothly and changes from green to red, plus a portrait flash (red for damage, green for healing).
+- Buttons grow on hover and shrink when pressed.
+- Cards pop in when drawn; HUD text pops when it changes.
+- Game over screen fades in with a bouncing result text.
 
----
+### Audio
 
-## 6. How to extend the game
-
-- **New card:** create a `CardData` asset and drag existing effect assets into its list. Zero code. The eight cards in the game were all made this way, including combinations such as 9 damage from two effects.
-- **New effect (for example shield or poison):** add one `EffectData` subclass. No existing class changes.
-- **New scientist:** create a `ScientistData` asset and add it to the roster list on `GameManager`.
-- **Different opponent:** replace or disable `AIController`. The game began as hot-seat for two humans and switching to the computer required no change to the rules or the UI.
-- **More scientists per player:** `PlayerState` already stores a list.
+Music, plus sound effects for buttons, drawing and playing cards, turn start, hits, heals, lightning zaps, victory and defeat. Everything is played by one `AudioManager` that listens to game events.
 
 ---
 
-## 7. Technical decisions and problems solved
+## Architecture
 
-- Static events survive between Play sessions when Domain Reload is off, which causes duplicate listeners. Solved with `ResetAll` using `RuntimeInitializeOnLoadMethod`.
-- Effects originally needed to know about concrete scientists. Introducing `ICombatant` and `EffectContext` removed that dependency.
-- The UI first updated by tracking individual changes. Rebuilding views from state on each event proved simpler and removed synchronisation bugs.
-- The same `TryPlayCard` method validates turn order, energy and hand contents, so neither the UI nor the AI can break the rules.
+The project is **event-driven**: systems never reference each other directly. They raise or listen to events in one place (`GameEvents`), so UI, audio and effects can all react to the game without the game logic knowing they exist.
+
+### Project layout
+
+```
+Agent.md                 Rules for humans and AI agents (git workflow, architecture rules)
+.claude/skills/          Project skills (add-game-event, add-scientist-ability, port-shadertoy-shader)
+Assets/
+├── Scripts
+│   ├── Core        GameEvents (single owner of every event), ICombatant, EffectContext
+│   ├── Data        ScriptableObjects: CardData, ScientistData, UiPalette
+│   ├── Effects     One ScriptableObject per card effect (Damage, Heal, LifeSteal, MultiHit, Overcharge, Execute)
+│   ├── Gameplay    Pure game logic: GameManager, TurnManager, CardPlayService, Deck, Hand,
+│   │               PlayerState, Scientist, WinChecker, MatchSetup, AIStrategy, AIController
+│   ├── UI          Views and visual feedback (HandView, CardView, ScientistPanelView, TurnHUDView,
+│   │               shader controllers, lightning, particles, pause / title / game over screens)
+│   ├── Audio       AudioManager (listens to GameEvents, plays music and sound effects)
+│   └── Editor      Tools that generate content and assign assets (roster, card icons, art materials)
+├── Shaders         Custom UI shaders
+└── Data            Generated effect and card assets, palette
+```
+
+### How the pieces talk
+
+```mermaid
+flowchart LR
+    subgraph Input
+        CV[CardView and buttons]
+        CI[CardInputController]
+        AI[AIController]
+    end
+    subgraph Logic[Gameplay logic]
+        GM[GameManager]
+        TM[TurnManager]
+        CP[CardPlayService]
+        EF[Effects]
+    end
+    GE{{GameEvents}}
+    subgraph Listeners
+        UI[Views and HUD]
+        VFX[Shaders, lightning, particles]
+        AU[AudioManager]
+    end
+
+    CV -- clicks --> GE
+    GE --> CI
+    CI --> GM
+    AI -- IMatchActions --> GM
+    GM --> TM
+    GM --> CP
+    CP --> EF
+    TM --> GE
+    CP --> GE
+    EF --> GE
+    GE --> UI
+    GE --> VFX
+    GE --> AU
+```
+
+### What happens when you play a card
+
+```mermaid
+sequenceDiagram
+    actor Player
+    participant View as CardView
+    participant Events as GameEvents
+    participant Input as CardInputController
+    participant Game as GameManager
+    participant Play as CardPlayService
+    participant Effect as EffectData
+    participant Listeners as UI, VFX, Audio
+
+    Player->>View: click card
+    View->>Events: OnCardClicked
+    Events->>Input: OnCardClicked
+    Input->>Game: TryPlayCard
+    Game->>Play: TryPlay
+    Play->>Events: OnCardPlayStarted
+    Events-->>Listeners: card dissolves, sound plays
+    Play->>Effect: Apply (for each effect)
+    Effect->>Events: OnDamageDealt / OnHealed
+    Events-->>Listeners: lightning, shake, numbers, health bar
+    Play->>Events: OnCardPlayed
+    Events-->>Listeners: hand refreshes, HUD updates
+```
+
+### Key design decisions
+
+- **One owner for events.** Every event is declared in `GameEvents`. No other class declares static events, which keeps the flow of the game easy to trace.
+- **Data-driven content.** Cards, scientists and effects are ScriptableObjects. Adding a card means creating an asset, not writing code.
+- **Effect system.** Each card holds a list of `EffectData` assets. A new effect is one small class; cards can combine several effects.
+- **Logic separated from presentation.** Gameplay classes know nothing about the UI. Views only read state and listen to events.
+- **Small, focused sub-systems.** Match setup, turn flow, card playing, win checking and AI each live in their own class (`MatchSetup`, `TurnManager`, `CardPlayService`, `WinChecker`, `AIStrategy`).
+- **AI split in two.** `AIStrategy` is pure logic (decides *what* to play); `AIController` only handles timing (decides *when*) and acts through the `IMatchActions` interface.
+- **Reusable juice components.** `UiPunch`, `ButtonJuice`, `FloatingNumber`, `UiDissolve`, `LightningBolt` and `ScreenFlash` are small, self-contained and created by script, so no prefab editing is required.
+- **Effects listen, they don't drive.** For example, `LightningController` only listens to damage events to decide where to draw a bolt. The game logic knows nothing about it.
+- **Single source of truth for colors.** `UiPalette` feeds the UI, shaders and effects.
+- **Editor tooling.** `Science Clash > Generate Roster Content` rebuilds all effect and card assets from one script, which keeps balance changes in one place.
 
 ---
 
-## 8. From the original idea to a three-day build, and next steps
+## Challenge brief checklist
 
-In three days I built a complete, playable core of my original Science Clash idea: a turn-based scientist duel against a computer opponent. The full vision is larger, and the architecture was chosen so the missing parts can be added without rewriting what exists.
+| Requirement | Where to see it |
+|---|---|
+| Unity 6 or newer | Unity 6 project, URP (2D) |
+| Skills set up | [`.claude/skills/`](.claude/skills) |
+| `Agent.md` with GitHub rules | [`Agent.md`](Agent.md) |
+| One feature at a time | Branch-per-feature history in the commit log |
+| Shaders and particles | [Visual and audio polish](#visual-and-audio-polish) |
+| Good architecture | [Architecture](#architecture) |
+| Not "AI slop" | One art direction, a single palette, and custom shaders and effects on top of the art |
+| Public GitHub repository | This repository |
+| Brief screen recording | [Demo](#demo) |
 
-### The original idea
+---
 
-- Science Clash was designed as turn-based 1v1 battles between scientists, with three scientists per player, each using abilities built from effects.
+## Getting started
 
-### What was realised in three days
+**Requirements:** Unity 6 or newer, with the Universal Render Pipeline (included in the project).
 
-- A full turn loop with energy, drawing, discarding and a win condition.
-- Eight cards defined entirely as ScriptableObject assets, built from reusable damage and heal effects.
-- Six selectable scientists (Curie, Newton, Tesla, Turing, Lovelace and Einstein) with portraits, a selection screen, and a random opponent for the computer.
-- A computer opponent that plays as player 2.
-- A complete interface: card hand, health panels, turn display, game over screen with restart, a lab background and card art.
-- The structure requested in feedback on my previous project: one central event manager and a division into sub-systems.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/YOUR-USERNAME/YOUR-REPO.git
+   ```
+2. Open the project folder in **Unity Hub**. The first import takes a few minutes.
+3. Open `Assets/Scenes/SampleScene.unity`.
+4. Press **Play**.
 
-### Not yet realised
+**Editor tools** (menu **Science Clash**):
 
-- Scientists differ only in health and portrait. None has abilities of its own yet.
-- Each player fields one scientist instead of three.
-- There is no way to buy or unlock new scientists and abilities.
+- **Generate Roster Content:** rebuilds all effect and card assets and assigns them to the six scientists. It overwrites the generated assets, so change balance numbers in this script, not by hand.
+- **Assign Card Icons:** gives every card an icon from `Assets/Art/CardIcons` (a file named after the card, or the icon of its main effect type).
 
-### Next steps
+---
 
-1. Give every scientist its own ability. A `ScientistData` would hold a list of ability effects that reuse `EffectData`, and the battle screen would get an ability button. The existing damage and heal effects are reused as they are.
-2. Add more abilities by writing new `EffectData` subclasses (for example shield, poison, draw a card, gain energy). No existing class changes.
-3. Bring back three scientists per player. `PlayerState` already stores a list, so the work is switching the active scientist and showing a team panel.
-4. Let the player buy or unlock more characters and abilities. The roster is already a list of assets, so a shop only decides which assets are in it.
-5. Improve the computer opponent so it uses abilities and looks ahead.
-6. Add automated tests for the plain C# classes (`Deck`, `Hand`, `PlayerState`), which do not depend on the scene.
+## Development process
+
+The project follows the rules in [`Agent.md`](Agent.md):
+
+- One feature per branch (`feat/...`, `fix/...`), merged into `main` when it works.
+- Small commits with a prefix (`feat:`, `fix:`, `balance:`).
+- Features were built one at a time, planned first, then tested before moving on.
+- Repeatable tasks have a skill in `.claude/skills/`: adding a game event, adding a scientist or ability, and porting a Shadertoy shader to Unity.
+
+**Roadmap followed:** repo and setup, event manager and sub-system split, effect system, abilities and 36 cards, game flow (title and pause), visual identity, art, animated background, dissolve, holographic card, selection glow, hit feedback, particles, juice and sound, bug and balance pass, and a final lightning effect.
+
+**Use of AI:** built with AI assistance (Claude) for planning, code and shader conversion. Testing, integration and design decisions were done by me.
+
+### Balance
+
+A rough simulation of AI-vs-AI matches was used to find outliers. It showed Curie winning far too often because of her life-steal cards and Turing winning too rarely, so their numbers were adjusted. This was a sanity check, not a guarantee: real play testing matters more.
+
+### Possible future work
+
+- A smarter AI: take lethal damage when available, and avoid recoil cards when low on health.
+- Volume sliders in the pause menu.
+- More scientists and cards.
+
+---
+
+## Credits
+
+**Fonts**
+- [Chakra Petch](https://fonts.google.com/specimen/Chakra+Petch), SIL Open Font License.
+- Electronic Highway Sign (add the author, source link and license here).
+
+**Sound effects**
+- From [Mixkit](https://mixkit.co/) (Mixkit Sound Effects Free License): "Ethereal fairy win sound", "Heal soft water spell", "Impact of a strong punch", "Player losing or failing".
+- Add the source and license of the remaining sound effects and the music here.
+
+**Card icons**
+- [game-icons.net](https://game-icons.net) (add each icon's author and the license).
+
+**AI-generated art**
+- Scientist portraits and the lab background were generated with Gemini (Google), then restyled in the engine with custom shaders.
+
+**Shaders**
+- Custom shaders written for this project, with some adapted from Shadertoy. Add each adapted shader here: title, author and link.
+
+**Tools**
+- Unity, TextMeshPro, Universal Render Pipeline (2D), Claude (Anthropic) for AI assistance.
