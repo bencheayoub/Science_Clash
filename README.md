@@ -7,7 +7,7 @@ Built in Unity 6 (2D, URP) as the final coding challenge: a small game with a fo
 
 ## Demo
 
-[▶ Watch the gameplay video](ADD-VIDEO-LINK-HERE)
+[▶ Watch the gameplay video](https://github.com/bencheayoub/Science_Clash/tree/main/Videos).
 
 <!-- Add 2-3 screenshots or a GIF here, for example:
 ![Battle screen](docs/screenshots/battle.png)
